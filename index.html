@@ -22,17 +22,17 @@
     <script src="https://cdn.jsdelivr.net/npm/redoc@next/bundles/redoc.standalone.js"> </script>
 
     <script>
-	if (document.readyState == 'loading') {
-		document.addEventListener("DOMContentLoaded", () => initRedoc());
-	} else {
-		initRedoc();
-	}
+        if (document.readyState == 'loading') {
+            document.addEventListener("DOMContentLoaded", () => initRedoc());
+        } else {
+            initRedoc();
+        }
 
         var api_url = 'https://profee-com.github.io/external-precalcs-api/precalc-api.json';
-      
-	function initRedoc() {
-		Redoc.init(api_url, {"pathInMiddlePanel":true});
-	}
+
+        function initRedoc() {
+            Redoc.init(api_url, {"pathInMiddlePanel":true});
+        }
     </script>
 
   </body>
