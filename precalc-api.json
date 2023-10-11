@@ -216,7 +216,9 @@
         "required": [
           "fromCurrency",
           "merchantId",
-          "toCurrency"
+          "toCurrency",
+          "fromCountry",
+          "toCountry"
         ],
         "type": "object",
         "properties": {
