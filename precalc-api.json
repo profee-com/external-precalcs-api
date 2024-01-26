@@ -16,6 +16,51 @@
     }
   ],
   "paths": {
+    "/api/v3/calc": {
+      "post": {
+        "tags": [
+          "V3 / Payments"
+        ],
+        "summary": "Payment calculation",
+        "description": "Perform payment calculation for promo and standard courses",
+        "operationId": "calculate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExternalPrecalcRequestDto"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseContainerDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/PrecalcResponseDtoV3"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v2/calc": {
       "post": {
         "tags": [
@@ -28,7 +73,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestDtoV2"
+                "$ref": "#/components/schemas/ExternalPrecalcRequestDto"
               }
             }
           },
@@ -73,7 +118,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/RequestDtoV1"
+                "$ref": "#/components/schemas/ExternalPrecalcRequestDto"
               }
             }
           },
@@ -212,13 +257,22 @@
         },
         "description": "Payment calculation result"
       },
-      "RequestDtoV2": {
+      "PrecalcResponseDtoV3": {
+        "type": "object",
+        "properties": {
+          "promotion": {
+            "$ref": "#/components/schemas/ResponseDto"
+          },
+          "standard": {
+            "$ref": "#/components/schemas/ResponseDto"
+          }
+        }
+      },
+      "ExternalPrecalcRequestDto": {
         "required": [
-          "fromCurrency",
           "merchantId",
-          "toCurrency",
-          "fromCountry",
-          "toCountry"
+          "fromCurrency",
+          "toCurrency"
         ],
         "type": "object",
         "properties": {
@@ -259,41 +313,6 @@
             "minLength": 0,
             "type": "string",
             "description": "Merchant's marketing ID (this ID will be placed at utm_campaign further)"
-          }
-        },
-        "description": "Request for payment calculation (either 'fromAmount' or 'toAmount' must be specified)"
-      },
-      "RequestDtoV1": {
-        "required": [
-          "fromCurrency",
-          "merchantId",
-          "toCurrency"
-        ],
-        "type": "object",
-        "properties": {
-          "merchantId": {
-            "type": "string",
-            "description": "Merchant ID"
-          },
-          "methodId": {
-            "type": "string",
-            "description": "Payment method type id"
-          },
-          "fromCurrency": {
-            "type": "string",
-            "description": "Source currency (ISO code)"
-          },
-          "fromAmount": {
-            "type": "number",
-            "description": "Source amount (one of fromAmount and toAmount must be specified)"
-          },
-          "toCurrency": {
-            "type": "string",
-            "description": "Destination currency (ISO code)"
-          },
-          "toAmount": {
-            "type": "number",
-            "description": "Destination amount (one of fromAmount and toAmount must be specified)"
           }
         },
         "description": "Request for payment calculation (either 'fromAmount' or 'toAmount' must be specified)"
