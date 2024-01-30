@@ -257,14 +257,60 @@
         },
         "description": "Payment calculation result"
       },
+      "ResponseDtoV3": {
+        "type": "object",
+        "properties": {
+          "precalcId": {
+            "type": "string",
+            "description": "Calculation ID"
+          },
+          "fromCurrency": {
+            "type": "string",
+            "description": "Source currency"
+          },
+          "fromAmount": {
+            "type": "number",
+            "description": "Source amount"
+          },
+          "toCurrency": {
+            "type": "string",
+            "description": "Destination currency"
+          },
+          "toAmount": {
+            "type": "number",
+            "description": "Destination amount"
+          },
+          "feeCurrency": {
+            "type": "string",
+            "description": "Fee currency"
+          },
+          "feeAmount": {
+            "type": "number",
+            "description": "Fee amount"
+          },
+          "rateFromCurrency": {
+            "type": "string",
+            "description": "Rate source currency"
+          },
+          "rateToCurrency": {
+            "type": "string",
+            "description": "Rate destination currency"
+          },
+          "rateAmount": {
+            "type": "number",
+            "description": "Currency rate amount"
+          }
+        },
+        "description": "Payment calculation result V3"
+      },
       "PrecalcResponseDtoV3": {
         "type": "object",
         "properties": {
           "promotion": {
-            "$ref": "#/components/schemas/ResponseDto"
+            "$ref": "#/components/schemas/ResponseDtoV3"
           },
           "standard": {
-            "$ref": "#/components/schemas/ResponseDto"
+            "$ref": "#/components/schemas/ResponseDtoV3"
           }
         }
       },
