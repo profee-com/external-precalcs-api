@@ -28,7 +28,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ExternalPrecalcRequestDto"
+                "$ref": "#/components/schemas/RequestV3"
               }
             }
           },
@@ -359,6 +359,49 @@
             "minLength": 0,
             "type": "string",
             "description": "Merchant's marketing ID (this ID will be placed at utm_campaign further)"
+          }
+        },
+        "description": "Request for payment calculation (either 'fromAmount' or 'toAmount' must be specified)"
+      },
+      "RequestV3": {
+        "required": [
+          "merchantId",
+          "fromCurrency",
+          "toCurrency"
+        ],
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "string",
+            "description": "Merchant ID"
+          },
+          "methodId": {
+            "type": "string",
+            "description": "Payment method type id"
+          },
+          "fromCountry": {
+            "type": "string",
+            "description": "Source country (ISO Alpha2 code)"
+          },
+          "fromCurrency": {
+            "type": "string",
+            "description": "Source currency (ISO code)"
+          },
+          "fromAmount": {
+            "type": "number",
+            "description": "Source amount (one of fromAmount and toAmount must be specified)"
+          },
+          "toCountry": {
+            "type": "string",
+            "description": "Destination country (ISO Alpa2 code)"
+          },
+          "toCurrency": {
+            "type": "string",
+            "description": "Destination currency (ISO code)"
+          },
+          "toAmount": {
+            "type": "number",
+            "description": "Destination amount (one of fromAmount and toAmount must be specified)"
           }
         },
         "description": "Request for payment calculation (either 'fromAmount' or 'toAmount' must be specified)"
