@@ -615,7 +615,7 @@
           },
           "isPromotion": {
             "type": "boolean",
-            "description": "Destination method type"
+            "description": "Is calculation with promo"
           },
           "nextStepUrl": {
             "type": "string",
