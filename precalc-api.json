@@ -16,6 +16,54 @@
     }
   ],
   "paths": {
+    "/api/v4/calc": {
+      "post":{
+        "tags": [
+          "V4 / Payments"
+        ],
+        "summary": "Calculation by all available methods",
+        "description": "Perform payment calculation for promo and standard courses",
+        "operationId": "calculate",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestV4"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "500": {
+            "description": "Internal Server Error"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseContainerDto"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ResponseV4"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v3/calc": {
       "post": {
         "tags": [
@@ -327,6 +375,53 @@
         },
         "description": "Request for payment calculation (either 'fromAmount' or 'toAmount' must be specified)"
       },
+      "RequestV4": {
+        "required": [
+          "merchantId",
+          "fromCountry",
+          "fromCurrency",
+          "toCountry",
+          "toCurrency"
+        ],
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "string",
+            "description": "Merchant ID"
+          },
+          "methodId": {
+            "type": "string",
+            "description": "Payment method type id"
+          },
+          "fromCountry": {
+            "type": "string",
+            "description": "Source country (ISO Alpha2 code)"
+          },
+          "fromCurrency": {
+            "type": "string",
+            "description": "Source currency (ISO code)"
+          },
+          "fromAmount": {
+            "type": "number",
+            "description": "Source amount"
+          },
+          "toCountry": {
+            "type": "string",
+            "description": "Destination country (ISO Alpa2 code)"
+          },
+          "toCurrency": {
+            "type": "string",
+            "description": "Destination currency (ISO code)"
+          },
+          "subId": {
+            "type": "string",
+            "description": "Merchant's marketing ID (this ID will be placed at utm_term further)",
+            "maxLength": 1000
+          }
+        },
+        "description": "Request for payment calculation"
+      },
+
       "ResponseDto": {
         "type": "object",
         "properties": {
@@ -458,6 +553,76 @@
             "$ref": "#/components/schemas/ResponseDtoV3"
           }
         }
+      },
+      "ResponseV4": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Calculation status"
+          },
+          "message": {
+            "type": "string",
+            "description": "Optional message"
+          },
+          "precalcId": {
+            "type": "string",
+            "description": "Calculation ID"
+          },
+          "fromCurrency": {
+            "type": "string",
+            "description": "Source currency"
+          },
+          "fromAmount": {
+            "type": "number",
+            "description": "Source amount"
+          },
+          "toCurrency": {
+            "type": "string",
+            "description": "Destination currency"
+          },
+          "toAmount": {
+            "type": "number",
+            "description": "Destination amount"
+          },
+          "feeCurrency": {
+            "type": "string",
+            "description": "Fee currency"
+          },
+          "feeAmount": {
+            "type": "number",
+            "description": "Fee amount"
+          },
+          "rateFromCurrency": {
+            "type": "string",
+            "description": "Rate source currency"
+          },
+          "rateToCurrency": {
+            "type": "string",
+            "description": "Rate destination currency"
+          },
+          "rateAmount": {
+            "type": "number",
+            "description": "Currency rate amount"
+          },
+          "payIn": {
+            "type": "string",
+            "description": "Source method type"
+          },
+          "payOut": {
+            "type": "string",
+            "description": "Destination method type"
+          },
+          "isPromotion": {
+            "type": "boolean",
+            "description": "Destination method type"
+          },
+          "nextStepUrl": {
+            "type": "string",
+            "description": "Link for further step to proceed"
+          }
+        },
+        "description": "Payment calculation result V4"
       },
       "CorridorDescriptorDto": {
         "type": "object",
